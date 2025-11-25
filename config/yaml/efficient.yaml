@@ -1,0 +1,78 @@
+general:
+  seed: 3407
+  gpu_id: 6
+  mode: test
+  vis: False
+  fine_tune: False
+  save_mask: False
+  model_select: 'efficient'
+  continue_training: False
+  exp_name: Efficient
+  exp_id: remove_AIFACE
+
+data:
+  split: False
+  # if split is True, use the following parameters to train model with different subset of FF++.
+  dataset_name: [FaceShifter]
+  dataset_name_val: [FaceShifter]
+
+  batch_size: 32
+
+  use_mask: False
+  use_random_mask: False
+  use_lmk_mask: False
+  use_pr_mask: False
+
+  data_path_train: /home/h/hchengxa/media_dld/DF_Dataset/FF++_faces # /root/autodl-tmp/FF++_Faces_c40 /root/autodl-tmp/Deepfake_Dataset/FFIW10K_train /root/autodl-tmp/Deepfake_Dataset/Celeb_faces
+  data_path_val: /home/h/hchengxa/media_dld/DF_Dataset/FF++_faces  # /root/autodl-tmp/heat_map_finetune/   /root/autodl-tmp/FF++_faces     /root/autodl-tmp/Deepfake_Face_Cropped/DFDC_faces  /root/autodl-tmp/DeeperForensics_random
+  data_path_test: /home/h/hchengxa/media_dld/DF_Dataset/FF++_faces #
+
+  data_path_dfdc: /home/h/hchengxa/media_dld/DF_Dataset/DFDC
+  data_path_celeb_df: /home/h/hchengxa/media_dld/DF_Dataset/Celeb-DF
+  data_path_df10: /home/h/hchengxa/media_dld/DF_Dataset/DF10_faces # /media/harry/KioXIA/DeeperForensics_random
+  data_path_wild: /home/h/hchengxa/media_dld/DF_Dataset/WildDeepfake
+  data_path_ffiw: /home/h/hchengxa/media_dld/DF_Dataset/FFIW
+
+  csv_list_ffpp:
+    train: ['/home/harryxa/AI_Face_imagesV2/train_data.csv']
+    val: ['/home/harryxa/AI_Face_imagesV2/test/testset_annotations.csv']
+    test: ['/home/harryxa/AI_Face_imagesV2/test/testset_annotations.csv']
+
+  csv_list_celeb: ['/home/h/hchengxa/media_dld/Deepfake_Dataset_with_race/celebdf/test.csv']
+  csv_list_dfdc: ['/home/h/hchengxa/media_dld/Deepfake_Dataset_with_race/dfdc/test.csv']
+  csv_list_dfd: ['/home/h/hchengxa/media_dld/Deepfake_Dataset_with_race/dfd/test.csv']
+
+  bio_choose: full # [male, white], [male, asian], [female, white], [female, asian], [female, black]
+  remove: True
+  reduction: 'none'
+  load_checkpoint: /home/harryxa/PRLE/PRLE_ckpt/Efficient_validation_class # /root/autodl-tmp/checkpoints/FF++/xception  /root/autodl-tmp/checkpoints/xception
+  save_checkpoint: /home/harryxa/PRLE/PRLE_ckpt/Efficient_validation_class
+
+  mask_ratio_path: /root/autodl-tmp/Deepfake_Dataset/heat_map_fusion
+  mask_path: /root/autodl-tmp/Deepfake_Dataset/heat_map_fusion
+  save_img_path: /root/autodl-tmp/Deepfake_Dataset/img_show/
+
+network:
+  lambda_ortho: 0.2
+  epoch_fc: 0
+  epochs_net: 10
+  lr: 2.e-4
+  lr_finetune: 5.e-6
+
+vis:
+    data_split: [test]
+    img_label: fake
+    subset:   [Deepfakes] #[youtube, Deepfakes, Face2Face, FaceSwap, FaceShifter, NeuralTextures]
+    data_path: /root/autodl-tmp/Deepfake_Dataset/FF++_faces_new/train/fake/Deepfakes/
+    cam_save_path: /root/autodl-tmp/Deepfake_Dataset/heat_map_for_ffpp/
+    dataset_select: FFPP
+    save_template: '%04d_%s_%s_wo_mask.png'
+    target: 0 # 0 for fake, 1 for real
+    save_result: True
+    save_npy: False
+
+logging:
+    print_freq: 10
+    eval_freq: 1
+
+progress: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] #[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
